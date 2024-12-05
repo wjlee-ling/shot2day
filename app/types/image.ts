@@ -4,6 +4,6 @@ export interface ImageItem {
   id: string;
   title: string;
   description: string;
-  imageUrl: StaticImageData;
+  imageUrl: StaticImageData | string;
   createdAt: string;
 }
