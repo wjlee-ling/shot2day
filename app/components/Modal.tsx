@@ -1,5 +1,5 @@
+import { ImageItem } from "@/lib/types";
 import { useEffect, useRef } from "react";
-import { ImageItem } from "@/app/types/image";
 import Image from "next/image";
 import { X } from "lucide-react";
 
