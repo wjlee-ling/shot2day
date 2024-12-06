@@ -1,4 +1,4 @@
-import { ImageItem } from "@/app/types/image";
+import { ImageItem } from "@/lib/types";
 import img01 from "@/public/images/71478D36-3068-4610-B49D-1B7A7DE715DB_1_105_c.jpeg";
 import img02 from "@/public/images/AB3ECF1B-39DF-4543-AC85-B1CE1DC7F327_1_105_c.jpeg";
 import img03 from "@/public/images/ECD44FD3-A687-4E6C-932B-5623F1DD5FD3.jpeg";
