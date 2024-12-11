@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-
+import { BookmarkPlus } from "lucide-react";
 export function Navbar() {
   const router = useRouter();
 
@@ -16,12 +16,13 @@ export function Navbar() {
         <Link href="/" className="text-xl font-bold">
           Shot2Day
         </Link>
-        <div className="flex gap-4">
+        <div className="gap-4">
           <button
             onClick={handleUploadImage}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors flex items-center gap-2"
           >
-            이미지 추가
+            <BookmarkPlus />
+            New Shot
           </button>
         </div>
       </div>
