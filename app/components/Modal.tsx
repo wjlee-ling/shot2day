@@ -48,6 +48,10 @@ export const Modal = ({ image, onClose }: ModalProps) => {
             alt={image.title}
             fill
             className="object-contain p-6"
+            // sizes 속성은 반응형 이미지 크기를 지정합니다.
+            // "(max-width: 1024px) 100vw, 1024px"는 뷰포트 너비가 1024px 이하일 때
+            // 이미지가 뷰포트 너비의 100%를 차지하도록 하고,
+            // 그 이상일 때는 1024px로 고정되도록 설정합니다.
             sizes="(max-width: 1024px) 100vw, 1024px"
             priority
           />
