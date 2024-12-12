@@ -7,8 +7,8 @@ import Image from "next/image";
 import { BookImage } from "lucide-react";
 
 export default function UploadPage() {
-  const [loading, setLoading] = useState(false);
   const [fileMetadata, setFileMetadata] = useState<object | null>(null);
+  const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -17,7 +17,6 @@ export default function UploadPage() {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    setLoading(true);
     setImageFile(file); // Store the uploaded file
     try {
       const newMetadata = await exifr.parse(file);
@@ -40,8 +39,6 @@ export default function UploadPage() {
       });
     } catch (error) {
       console.error("Upload failed:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -52,39 +49,71 @@ export default function UploadPage() {
     return value;
   };
 
+  const handleMouseOver = (event: React.MouseEvent<HTMLDivElement>) => {
+    setFileMetadataVisible(true);
+  };
+
+  const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
+    setFileMetadataVisible(false);
+  };
+
+  // return (
+  //   <>
+  //     {fileMetadata && (
+  //         <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
+  //           <div className="flex flex-col gap-4">
+  //             {Object.entries(fileMetadata).map(([key, value]) =>
+  //               value ? (
+  //                 <div className="flex items-center hover:w-3/4 hover:bg-black/30 hover:text-lg">
+  //                   <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg w-1/3 overflow-clip">
+  //                     {key}
+  //                   </div>
+  //                   <div className="text-white rounded-r-md px-4 py-2 flex-1 text-shadow-lg">
+  //                     {formatValue(value)}
+  //                   </div>
+  //                 </div>
+  //               ) : null,
+  //             )}
+  //           </div>
+  //         </div>
+  //       )}
+  //     </>
+  //   );
+  // };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">이미지 업로드</h1>
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
-        <div className="md:col-span-4 col-span-full relative">
+        <div className="md:col-span-4 col-span-full ">
           {imageFile ? (
-            <>
+            <div
+              className="relative"
+              onMouseOver={handleMouseOver}
+              onMouseLeave={handleMouseLeave}
+            >
               <Image
                 src={URL.createObjectURL(imageFile)}
                 alt="Uploaded Image"
-                width={1024}
-                height={1024}
-                className="object-contain rounded-lg"
+                width={768}
+                height={768}
+                className="object-contain rounded-lg "
               />
-              {fileMetadata && (
-                <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
-                  <div className="flex flex-col gap-4">
+              {fileMetadata && fileMetadataVisible && (
+                <div className="absolute inset-0 p-4 rounded-lg  max-w-[768px] max-h-[768px]">
+                  <div className="flex flex-col gap-4 text-lg bg-black/30 text-white ">
                     {Object.entries(fileMetadata).map(([key, value]) =>
                       value ? (
-                        <div className="flex items-center hover:bg-black/30 hover:text-lg">
-                          <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg w-1/3 overflow-clip hover:w-1/2">
-                            {key}
-                          </div>
-                          <div className="text-white rounded-r-md px-4 py-2 flex-1 text-shadow-lg">
-                            {formatValue(value)}
-                          </div>
+                        <div className="flex items-center px-4 py-2">
+                          <div className="w-1/2 ">{key}</div>
+                          <div>{formatValue(value)}</div>
                         </div>
                       ) : null,
                     )}
                   </div>
                 </div>
               )}
-            </>
+            </div>
           ) : (
             <label className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer">
               <BookImage className="w-10 h-10 mb-4" />
