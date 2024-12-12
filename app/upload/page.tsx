@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { Card, CardContent } from "@/app/components/ui/card";
 import exifr from "exifr";
 import Image from "next/image";
 import { BookImage } from "lucide-react";
@@ -56,30 +55,6 @@ export default function UploadPage() {
   const handleMouseLeave = (event: React.MouseEvent<HTMLDivElement>) => {
     setFileMetadataVisible(false);
   };
-
-  // return (
-  //   <>
-  //     {fileMetadata && (
-  //         <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
-  //           <div className="flex flex-col gap-4">
-  //             {Object.entries(fileMetadata).map(([key, value]) =>
-  //               value ? (
-  //                 <div className="flex items-center hover:w-3/4 hover:bg-black/30 hover:text-lg">
-  //                   <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg w-1/3 overflow-clip">
-  //                     {key}
-  //                   </div>
-  //                   <div className="text-white rounded-r-md px-4 py-2 flex-1 text-shadow-lg">
-  //                     {formatValue(value)}
-  //                   </div>
-  //                 </div>
-  //               ) : null,
-  //             )}
-  //           </div>
-  //         </div>
-  //       )}
-  //     </>
-  //   );
-  // };
 
   return (
     <div className="container mx-auto px-4 py-8">
