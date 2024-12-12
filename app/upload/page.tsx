@@ -58,13 +58,33 @@ export default function UploadPage() {
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
         <div className="md:col-span-4 col-span-full relative">
           {imageFile ? (
-            <Image
-              src={URL.createObjectURL(imageFile)}
-              alt="Uploaded Image"
-              width={1024}
-              height={1024}
-              className="object-contain rounded-lg"
-            />
+            <>
+              <Image
+                src={URL.createObjectURL(imageFile)}
+                alt="Uploaded Image"
+                width={1024}
+                height={1024}
+                className="object-contain rounded-lg"
+              />
+              {fileMetadata && (
+                <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
+                  <div className="flex flex-col gap-4">
+                    {Object.entries(fileMetadata).map(([key, value]) =>
+                      value ? (
+                        <div className="flex items-center hover:bg-black/30 hover:text-lg">
+                          <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg">
+                            {key}
+                          </div>
+                          <div className="text-white rounded-r-md px-4 py-2 flex-1 text-shadow-lg">
+                            {formatValue(value)}
+                          </div>
+                        </div>
+                      ) : null,
+                    )}
+                  </div>
+                </div>
+              )}
+            </>
           ) : (
             <label className="flex flex-col items-center justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 cursor-pointer">
               <BookImage className="w-10 h-10 mb-4" />
@@ -109,86 +129,6 @@ export default function UploadPage() {
           </div>
         </div>
       </div>
-
-      {/* <div className="flex flex-col md:flex-row gap-6">
-        {imageFile && (
-          <div className="flex-1 mb-6 relative">
-            <Image
-              src={URL.createObjectURL(imageFile)}
-              alt="Uploaded Image"
-              width={1024}
-              height={1024}
-              className="object-contain rounded-lg"
-            />
-            {fileMetadata && (
-              <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
-                <div className="flex flex-col gap-4">
-                  {Object.entries(fileMetadata).map(([key, value]) =>
-                    value ? (
-                      <div
-                        key={key}
-                        className="flex items-center hover:bg-black/30 hover:text-xl"
-                      >
-                        <div
-                          className="text-white rounded-l-md px-4 py-2"
-                          style={{
-                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                          }}
-                        >
-                          {key}
-                        </div>
-                        <div
-                          className="text-white rounded-r-md px-4 py-2 flex-1"
-                          style={{
-                            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-                          }}
-                        >
-                          {formatValue(value)}
-                        </div>
-                      </div>
-                    ) : null,
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-        {!imageFile && (
-          <div className="flex-1">
-            <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-                id="fileInput"
-              />
-              <label
-                htmlFor="fileInput"
-                className="cursor-pointer inline-block px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
-              >
-                {loading ? "업로드 중..." : "이미지 선택"}
-              </label>
-            </div>
-          </div>
-        )}
-        <div className="mt-4">
-          <input
-            type="text"
-            placeholder="제목 입력"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="border rounded-md p-2 w-full mb-4"
-          />
-          <textarea
-            placeholder="설명 입력"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            className="border rounded-md p-2 w-full mb-4"
-            rows={3}
-          />
-        </div>
-      </div> */}
     </div>
   );
 }
