@@ -72,7 +72,7 @@ export default function UploadPage() {
                     {Object.entries(fileMetadata).map(([key, value]) =>
                       value ? (
                         <div className="flex items-center hover:bg-black/30 hover:text-lg">
-                          <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg">
+                          <div className="text-white rounded-l-md px-4 py-2 text-shadow-lg w-1/3 overflow-clip hover:w-1/2">
                             {key}
                           </div>
                           <div className="text-white rounded-r-md px-4 py-2 flex-1 text-shadow-lg">
