@@ -7,7 +7,7 @@ import img03 from "@/public/images/ECD44FD3-A687-4E6C-932B-5623F1DD5FD3.jpeg";
 // import path from "path";
 
 // // public/images 디렉토리의 모든 이미지 파일을 동적으로 가져옵니다
-// const imagesDirectory = path.join(process.cwd(), "public/images");
+// const imagesDirectory = path.join(process.cwd(), "public/images");`
 // const imageFiles = fs.readdirSync(imagesDirectory);
 
 // // 각 이미지 파일을 동적으로 import합니다
