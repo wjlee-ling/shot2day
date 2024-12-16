@@ -82,15 +82,17 @@ export default function UploadPage() {
         <div className="md:col-span-4 col-span-full">
           {imageFile ? (
             <div
-              className="relative "
-              style={{ width: "100%", height: 768 }}
+              className="relative"
+              style={{ width: "100%", height: "auto" }}
               onMouseOver={handleMouseOver}
               onMouseLeave={handleMouseLeave}
             >
               <Image
                 src={imageSrc}
                 alt="Uploaded Image"
-                fill
+                layout="responsive"
+                width={16}
+                height={9}
                 className="object-contain rounded-lg object-top"
               />
               {fileMetadata && fileMetadataVisible && (
