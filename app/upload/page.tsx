@@ -1,22 +1,34 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import exifr from "exifr";
 import Image from "next/image";
 import { BookImage } from "lucide-react";
+// import { getOrCreateStorageBucket } from "@/lib/supabase";
 
 export default function UploadPage() {
   const [fileMetadata, setFileMetadata] = useState<object | null>(null);
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string>("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    return () => {
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc);
+      }
+    };
+  }, [imageSrc]);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setImageFile(file); // Store the uploaded file
+    setImageSrc(URL.createObjectURL(file));
+
     try {
       const newMetadata = await exifr.parse(file);
       setFileMetadata({
@@ -56,6 +68,13 @@ export default function UploadPage() {
     setFileMetadataVisible(false);
   };
 
+  const handleUploadOnClick = async () => {
+    if (!imageFile) return;
+
+    const data = await getOrCreateStorageBucket();
+    console.log(data);
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">이미지 업로드</h1>
@@ -68,18 +87,19 @@ export default function UploadPage() {
               onMouseLeave={handleMouseLeave}
             >
               <Image
-                src={URL.createObjectURL(imageFile)}
+                src={imageSrc}
                 alt="Uploaded Image"
                 width={768}
                 height={768}
+                style={{ height: "auto" }}
                 className="object-contain rounded-lg "
               />
               {fileMetadata && fileMetadataVisible && (
-                <div className="absolute inset-0 p-4 rounded-lg  max-w-[768px] max-h-[768px]">
+                <div className="absolute inset-0 p-4 rounded-lg  max-w-[768px]">
                   <div className="flex flex-col gap-4 text-lg bg-black/30 text-white ">
                     {Object.entries(fileMetadata).map(([key, value]) =>
                       value ? (
-                        <div className="flex items-center px-4 py-2">
+                        <div key={key} className="flex items-center px-4 py-2">
                           <div className="w-1/2 ">{key}</div>
                           <div>{formatValue(value)}</div>
                         </div>
@@ -131,6 +151,7 @@ export default function UploadPage() {
               className="block w-full min-w-0 min-h-20 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline sm:text-sm/6"
             />
           </div>
+          {/* <button onClick={handleUploadOnClick}>업로드</button> */}
         </div>
       </div>
     </div>
