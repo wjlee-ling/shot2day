@@ -1,12 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import exifr from "exifr";
 import Image from "next/image";
 import { BookImage } from "lucide-react";
 // import { getOrCreateStorageBucket } from "@/lib/supabase";
 
 export default function UploadPage() {
+  const pathname = usePathname();
+  const id = pathname.split("/")[2];
   const [fileMetadata, setFileMetadata] = useState<object | null>(null);
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
