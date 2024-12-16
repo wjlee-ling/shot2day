@@ -91,7 +91,7 @@ export default function UploadPage() {
                 src={imageSrc}
                 alt="Uploaded Image"
                 fill
-                className="object-contain rounded-lg"
+                className="object-contain rounded-lg object-top"
               />
               {fileMetadata && fileMetadataVisible && (
                 <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
