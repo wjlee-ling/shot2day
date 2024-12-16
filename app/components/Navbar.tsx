@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BookmarkPlus } from "lucide-react";
+import { v4 } from "uuid";
+
 export function Navbar() {
   const router = useRouter();
 
   const handleUploadImage = () => {
-    router.push("/upload");
+    const uniqueId = v4();
+    router.push(`/upload/${uniqueId}`);
   };
 
   return (
