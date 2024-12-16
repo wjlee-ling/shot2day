@@ -97,6 +97,9 @@ export default function UploadPage() {
       if (error) throw error;
       alert("Uploaded successfully");
       setImageFile(null);
+      setTitle("");
+      setDescription("");
+      // TODO: Upload metadata to a Supabase table
     } catch (error: any) {
       alert(error.message);
     }
@@ -168,6 +171,8 @@ export default function UploadPage() {
               name="post-title"
               type="text"
               className="block min-w-0 w-full grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline sm:text-sm/6"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <label className="block text-lg/6 font-bold text-gray-900 bg-slack-500 mt-4">
@@ -179,6 +184,8 @@ export default function UploadPage() {
               name="post-body"
               type="text"
               className="block w-full min-w-0 min-h-20 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline sm:text-sm/6"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
           <button onClick={handleUpload}>업로드</button>
