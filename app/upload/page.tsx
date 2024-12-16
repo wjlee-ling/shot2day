@@ -11,7 +11,6 @@ export default function UploadPage() {
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("");
-  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -69,20 +68,12 @@ export default function UploadPage() {
     setFileMetadataVisible(false);
   };
 
-  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
-    const imageElement = event.currentTarget;
-    setImageSize({
-      width: imageElement.clientWidth,
-      height: imageElement.clientHeight,
-    });
-  };
+  // const handleUploadOnClick = async () => {
+  //   if (!imageFile) return;
 
-  const handleUploadOnClick = async () => {
-    if (!imageFile) return;
-
-    const data = await getOrCreateStorageBucket();
-    console.log(data);
-  };
+  //   const data = await getOrCreateStorageBucket();
+  //   console.log(data);
+  // };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -91,17 +82,16 @@ export default function UploadPage() {
         <div className="md:col-span-4 col-span-full">
           {imageFile ? (
             <div
-              className="relative bg-white"
+              className="relative "
+              style={{ width: "100%", height: 768 }}
               onMouseOver={handleMouseOver}
               onMouseLeave={handleMouseLeave}
             >
               <Image
                 src={imageSrc}
                 alt="Uploaded Image"
-                width={768}
-                height={768}
-                className="object-contain rounded-lg "
-                // onLoad={handleImageLoad}
+                fill
+                className="object-contain rounded-lg"
               />
               {fileMetadata && fileMetadataVisible && (
                 <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
