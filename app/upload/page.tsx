@@ -11,6 +11,7 @@ export default function UploadPage() {
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("");
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 });
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -68,6 +69,14 @@ export default function UploadPage() {
     setFileMetadataVisible(false);
   };
 
+  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement>) => {
+    const imageElement = event.currentTarget;
+    setImageSize({
+      width: imageElement.clientWidth,
+      height: imageElement.clientHeight,
+    });
+  };
+
   const handleUploadOnClick = async () => {
     if (!imageFile) return;
 
@@ -79,10 +88,10 @@ export default function UploadPage() {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-6">이미지 업로드</h1>
       <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 md:grid-cols-6">
-        <div className="md:col-span-4 col-span-full ">
+        <div className="md:col-span-4 col-span-full">
           {imageFile ? (
             <div
-              className="relative"
+              className="relative bg-white"
               onMouseOver={handleMouseOver}
               onMouseLeave={handleMouseLeave}
             >
@@ -91,12 +100,14 @@ export default function UploadPage() {
                 alt="Uploaded Image"
                 width={768}
                 height={768}
-                style={{ height: "auto" }}
                 className="object-contain rounded-lg "
+                // onLoad={handleImageLoad}
               />
               {fileMetadata && fileMetadataVisible && (
-                <div className="absolute inset-0 p-4 rounded-lg  max-w-[768px]">
-                  <div className="flex flex-col gap-4 text-lg bg-black/30 text-white ">
+                <div className="absolute inset-0 p-4 rounded-lg overflow-auto">
+                  <div
+                    className={`flex flex-col gap-4 text-lg bg-black/50 text-white`}
+                  >
                     {Object.entries(fileMetadata).map(([key, value]) =>
                       value ? (
                         <div key={key} className="flex items-center px-4 py-2">
