@@ -1,15 +1,16 @@
 "use client";
 
+import { supabase } from "@/lib/supabase";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import exifr from "exifr";
 import Image from "next/image";
+import exifr from "exifr";
 import { BookImage } from "lucide-react";
-// import { getOrCreateStorageBucket } from "@/lib/supabase";
 
 export default function UploadPage() {
   const pathname = usePathname();
   const id = pathname.split("/")[2];
+  const bucketName = "shot2day-image";
   const [fileMetadata, setFileMetadata] = useState<object | null>(null);
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -71,12 +72,35 @@ export default function UploadPage() {
     setFileMetadataVisible(false);
   };
 
-  // const handleUploadOnClick = async () => {
-  //   if (!imageFile) return;
+  const handleUpload = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!imageFile) return;
 
-  //   const data = await getOrCreateStorageBucket();
-  //   console.log(data);
-  // };
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to get/create bucket");
+      }
+
+      const { path } = await response.json();
+      const { error } = await supabase.storage
+        .from(bucketName)
+        .upload(path, imageFile);
+
+      if (error) throw error;
+      alert("Uploaded successfully");
+      setImageFile(null);
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -157,7 +181,7 @@ export default function UploadPage() {
               className="block w-full min-w-0 min-h-20 grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline sm:text-sm/6"
             />
           </div>
-          {/* <button onClick={handleUploadOnClick}>업로드</button> */}
+          <button onClick={handleUpload}>업로드</button>
         </div>
       </div>
     </div>

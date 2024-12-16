@@ -19,5 +19,8 @@ Shot2Day is an app that allows you to upload images from cameras, esp. RICOH 3 a
 ## Featrues
 
 - [x] Automatically extract & add metadata to uploaded images (_12/12/2024_)
-- [ ] Automatically save and retrieve images from an online storage service (Supabase)
-- [ ] Search images using natural language queries
+- [x] Automatically upload local images to an online storage service (Supabase)
+- [ ] Retrieve images from a Supabase storage
+  - [ ] Advanced search w/ metadata filters
+- [ ] Given user input text and extracted metadata, upload/upsert them to a Supabase table
+  - [ ] PGVector for similarity search
