@@ -15,12 +15,7 @@ type Params = {
 };
 const bucketName = "shot2day-image";
 
-async function getImages(
-  params: Params = {
-    limit: 30,
-    offset: 0,
-  },
-) {
+async function getImages(params: Params) {
   // const { images } = await import("@/lib/images");
   // return images;
 
@@ -31,12 +26,12 @@ async function getImages(
   if (error) throw error;
   console.log(data);
   const images = data.map((file) => ({
-    id: file.id,
-    name: file.name,
+    // supabaseId: file.id,
+    id: file.name.split(".")[0],
     imageUrl: supabase.storage.from(bucketName).getPublicUrl(`${file.name}`)
       .data.publicUrl,
   }));
-
+  console.log(images);
   return images;
 }
 
@@ -47,10 +42,11 @@ export default function Home() {
 
   const fetchImages = async () => {
     // setLoading(true);
-    const fetchedImages = await getImages();
-    console.log("fetchedImages");
-    console.log(fetchedImages);
-    // setImages(fetchedImages);
+    const fetchedImages = await getImages({
+      limit: 9,
+      offset: 0,
+    });
+    setImages(fetchedImages);
     // setLoading(false);
   };
 

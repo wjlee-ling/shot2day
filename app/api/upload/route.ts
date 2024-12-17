@@ -33,7 +33,7 @@ export async function POST(request: Request) {
     }
 
     // Generate a unique file path
-    const path = `${Date.now()}-${id}`;
+    const path = `${id}`;
 
     return NextResponse.json({ path });
   } catch (error: any) {

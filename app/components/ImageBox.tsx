@@ -16,17 +16,17 @@ export function ImageBox({ image, onClick }: ImageBoxProps) {
     >
       <Image
         src={image.imageUrl}
-        alt={image.title}
+        alt="image retrieved from a Supabase bucket"
         width={400}
         height={300}
         className="w-full h-48 object-cover"
       />
-      <div className="p-4">
+      {/* <div className="p-4">
         <h3 className="font-semibold text-lg mb-2 text-gray-800">
           {image.title}
         </h3>
         <p className="text-gray-600 line-clamp-3">{image.description}</p>
-      </div>
+      </div> */}
     </div>
   );
 }
