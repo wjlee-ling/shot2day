@@ -73,6 +73,33 @@ export default function UploadPage() {
     setFileMetadataVisible(false);
   };
 
+  const updateBucket = async ({ path, file }: { path: string; file: File }) => {
+    // sync bucket w/ image
+    const { error } = await supabase.storage
+      .from(bucketName)
+      .upload(path, file);
+
+    if (error) throw error;
+  };
+
+  const updateTable = async ({
+    id,
+    text,
+    metadata,
+  }: {
+    id: string;
+    text: string;
+    metadata: object | null;
+  }) => {
+    // sync table w/ metadata and post text
+    const { error } = await supabase.from(tableName).insert({
+      id: id,
+      text: text,
+      file_metadata: metadata,
+    });
+    if (error) throw error;
+  };
+
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!imageFile) return;
@@ -91,26 +118,16 @@ export default function UploadPage() {
       }
 
       const { path } = await response.json();
-      const { error } = await supabase.storage
-        .from(bucketName)
-        .upload(path, imageFile);
 
-      if (error) throw error;
+      updateBucket({ path, file: imageFile });
+      updateTable({ id, text, metadata: fileMetadata });
       alert("Uploaded successfully");
+
       setImageFile(null);
       setText("");
     } catch (error: any) {
       alert(error.message);
     }
-  };
-
-  const updateTable = async () => {
-    const { error } = await supabase.from(tableName).insert({
-      id: id,
-      text: text,
-      file_metadata: fileMetadata,
-    });
-    if (error) throw error;
   };
 
   return (
