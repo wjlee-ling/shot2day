@@ -11,12 +11,13 @@ export default function UploadPage() {
   const pathname = usePathname();
   const id = pathname.split("/")[2];
   const bucketName = "shot2day-image";
+  const tableName = "shots";
   const [fileMetadata, setFileMetadata] = useState<object | null>(null);
   const [fileMetadataVisible, setFileMetadataVisible] = useState(false);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageSrc, setImageSrc] = useState<string>("");
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  const [text, setText] = useState("");
+  // const [description, setDescription] = useState("");
 
   useEffect(() => {
     return () => {
@@ -97,12 +98,19 @@ export default function UploadPage() {
       if (error) throw error;
       alert("Uploaded successfully");
       setImageFile(null);
-      setTitle("");
-      setDescription("");
-      // TODO: Upload metadata to a Supabase table
+      setText("");
     } catch (error: any) {
       alert(error.message);
     }
+  };
+
+  const updateTable = async () => {
+    const { error } = await supabase.from(tableName).insert({
+      id: id,
+      text: text,
+      file_metadata: fileMetadata,
+    });
+    if (error) throw error;
   };
 
   return (
@@ -163,19 +171,19 @@ export default function UploadPage() {
         </div>
         <div className="md:col-span-2 flex flex-col">
           <label className="block text-lg/6 font-bold text-gray-900 bg-slack-500">
-            title
+            post
           </label>
           <div className="mt-2 bg-white rounded-md outline outline-1 -outline-offset-1 focus-within:outline focus-within:outline-slate-400">
             <input
-              id="post-title"
-              name="post-title"
+              id="post-text"
+              name="post-text"
               type="text"
               className="block min-w-0 w-full grow py-1.5 pl-1 pr-3 text-base text-gray-900 placeholder:text-gray-400 focus:outline sm:text-sm/6"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
             />
           </div>
-          <label className="block text-lg/6 font-bold text-gray-900 bg-slack-500 mt-4">
+          {/* <label className="block text-lg/6 font-bold text-gray-900 bg-slack-500 mt-4">
             description
           </label>
           <div className="mt-2 bg-white rounded-md outline outline-1 -outline-offset-1 focus-within:outline focus-within:outline-slate-400">
@@ -187,7 +195,7 @@ export default function UploadPage() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
-          </div>
+          </div> */}
           <button onClick={handleUpload}>업로드</button>
         </div>
       </div>

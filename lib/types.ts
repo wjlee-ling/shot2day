@@ -5,3 +5,9 @@ export interface ImageItem {
   imageUrl: string;
   // createdAt: string;
 }
+
+export interface ImageMetadata {
+  id: string;
+  text: string;
+  file_metadata: object;
+}
