@@ -1,11 +1,13 @@
 "use client";
 
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import exifr from "exifr";
 import { BookImage } from "lucide-react";
+import { v4 } from "uuid";
 
 export default function UploadPage() {
   const pathname = usePathname();
