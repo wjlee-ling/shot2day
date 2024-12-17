@@ -102,7 +102,7 @@ export default function UploadPage() {
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!imageFile) return;
+    if (!imageFile || !text) return;
 
     try {
       const response = await fetch("/api/upload", {
