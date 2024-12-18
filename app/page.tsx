@@ -13,25 +13,24 @@ type Params = {
   search?: string; // The search string to filter files by.
   sortBy?: object; // The column to sort by. Can be any column inside a FileObject.
 };
-const bucketName = "shot2day-image";
+// const bucketName = "shot2day-image";
+const tableName = "shots";
 
 async function getImages(params: Params) {
-  // const { images } = await import("@/lib/images");
-  // return images;
+  // const { data, error } = await supabase.storage
+  //   .from(bucketName)
+  //   .list("", params);
 
-  const { data, error } = await supabase.storage
-    .from(bucketName)
-    .list("", params);
+  const { data, error } = await supabase.from(tableName).select("*");
 
   if (error) throw error;
-  console.log(data);
-  const images = data.map((file) => ({
-    // supabaseId: file.id,
-    id: file.name.split(".")[0],
-    imageUrl: supabase.storage.from(bucketName).getPublicUrl(`${file.name}`)
-      .data.publicUrl,
+  const images = data.map((record) => ({
+    id: record.id,
+    imageUrl: record.image_url,
+    text: record.text,
+    createdAt: record.created_at,
+    metadata: record.file_metadata,
   }));
-  console.log(images);
   return images;
 }
 
@@ -41,13 +40,11 @@ export default function Home() {
   const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
 
   const fetchImages = async () => {
-    // setLoading(true);
     const fetchedImages = await getImages({
       limit: 9,
       offset: 0,
     });
     setImages(fetchedImages);
-    // setLoading(false);
   };
 
   useEffect(() => {
