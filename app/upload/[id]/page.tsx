@@ -88,16 +88,19 @@ export default function UploadPage() {
     id,
     text,
     metadata,
+    imageUrl,
   }: {
     id: string;
     text: string;
     metadata: object | null;
+    imageUrl: string;
   }) => {
     // sync table w/ metadata and post text
     const { error } = await supabase.from(tableName).insert({
       id: id,
       text: text,
       file_metadata: metadata,
+      image_url: imageUrl,
     });
     if (error) throw error;
   };
@@ -120,9 +123,11 @@ export default function UploadPage() {
       }
 
       const { path } = await response.json();
-
+      const url = supabase.storage.from(bucketName).getPublicUrl(path)
+        .data.publicUrl;
+      console.log(url);
       updateBucket({ path, file: imageFile });
-      updateTable({ id, text, metadata: fileMetadata });
+      updateTable({ id, text, metadata: fileMetadata, imageUrl: url });
       alert("Uploaded successfully");
 
       setImageFile(null);
