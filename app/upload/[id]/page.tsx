@@ -125,7 +125,6 @@ export default function UploadPage() {
       const { path } = await response.json();
       const url = supabase.storage.from(bucketName).getPublicUrl(path)
         .data.publicUrl;
-      console.log(url);
       updateBucket({ path, file: imageFile });
       updateTable({ id, text, metadata: fileMetadata, imageUrl: url });
       alert("Uploaded successfully");
