@@ -45,7 +45,7 @@ export const Modal = ({ image, onClose }: ModalProps) => {
         <div className="relative h-[600px]">
           <Image
             src={image.imageUrl}
-            alt={image.title}
+            alt={image.text}
             fill
             className="object-contain p-6"
             // sizes 속성은 반응형 이미지 크기를 지정합니다.
@@ -57,10 +57,21 @@ export const Modal = ({ image, onClose }: ModalProps) => {
           />
         </div>
         <div className="pt-4 px-6 pb-6">
-          <h2 className="text-2xl font-bold mb-4 text-card-foreground">
-            {image.title}
-          </h2>
-          <p className="text-muted-foreground">{image.description}</p>
+          <div className="text-xl mb-4 text-card-foreground">{image.text}</div>
+          <div className="flex flex-wrap justify-center overflow-auto text-md text-center gap-4">
+            {Object.entries(image.metadata).map(([key, value]) =>
+              value ? (
+                <div
+                  key={key}
+                  className="flex flex-row border-black rounded-lg"
+                >
+                  <div className="bg-black text-white font-bold p-1">{key}</div>
+                  <div className="p-1">{value}</div>
+                </div>
+              ) : null,
+            )}
+          </div>
+          <p className="text-muted-foreground">{image.createdAt}</p>
         </div>
         <button
           onClick={onClose}
