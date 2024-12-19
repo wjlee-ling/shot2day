@@ -1,4 +1,5 @@
 import { ImageItem } from "@/lib/types";
+import { displayLocalTime, formatMetadataValue } from "@/lib/helpers";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
@@ -11,6 +12,9 @@ interface ModalProps {
 export const Modal = ({ image, onClose }: ModalProps) => {
   // modalRef는 모달 컨테이너 div 요소에 대한 참조를 저장하는 ref입니다
   const modalRef = useRef<HTMLDivElement>(null);
+  const postDate = image
+    ? displayLocalTime({ utcDateTime: image.createdAt, dateOnly: true })
+    : "";
 
   // 모달 외부 클릭을 감지하는 useEffect 훅입니다
   useEffect(() => {
@@ -66,12 +70,16 @@ export const Modal = ({ image, onClose }: ModalProps) => {
                   className="flex flex-row border-black rounded-lg"
                 >
                   <div className="bg-black text-white font-bold p-1">{key}</div>
-                  <div className="p-1">{value}</div>
+                  <div className="p-1">
+                    {key == "createDate"
+                      ? displayLocalTime({ utcDateTime: value })
+                      : value}
+                  </div>
                 </div>
               ) : null,
             )}
           </div>
-          <p className="text-muted-foreground">{image.createdAt}</p>
+          <p className="text-muted-foreground">{postDate}</p>
         </div>
         <button
           onClick={onClose}
