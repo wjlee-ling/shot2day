@@ -55,26 +55,28 @@ export default function UploadPage() {
         throw new Error("Failed to read metadata");
       }
 
-      const { newMetadata } = await response.json();
+      const newMetadata = await response.json();
       console.log(newMetadata);
+      console.log(typeof newMetadata);
 
-      setFileMetadata({
-        contrast: newMetadata.Contrast,
-        createDate: newMetadata.CreateDate,
-        exifImageWidth: newMetadata.ExifImageWidth,
-        exifImageHeight: newMetadata.ExifImageHeight,
-        exposureMode: newMetadata.ExposureMode,
-        exposureTime: newMetadata.ExposureTime,
-        fNumber: newMetadata.FNumber,
-        focalLength: newMetadata.FocalLength,
-        focalLengthIn35mmFormat: newMetadata.FocalLengthIn35mmFormat,
-        ISO: newMetadata.ISO,
-        Model: newMetadata.Model,
-        orientation: newMetadata.Orientation,
-        saturation: newMetadata.Saturation,
-        sharpness: newMetadata.Sharpness,
-        whiteBalance: newMetadata.WhiteBalance,
-      });
+      // setFileMetadata({
+      //   contrast: newMetadata.Contrast,
+      //   createDate: newMetadata.CreateDate,
+      //   exifImageWidth: newMetadata.ExifImageWidth,
+      //   exifImageHeight: newMetadata.ExifImageHeight,
+      //   exposureMode: newMetadata.ExposureMode,
+      //   exposureTime: newMetadata.ExposureTime,
+      //   fNumber: newMetadata.FNumber,
+      //   focalLength: newMetadata.FocalLength,
+      //   focalLengthIn35mmFormat: newMetadata.FocalLengthIn35mmFormat,
+      //   ISO: newMetadata.ISO,
+      //   Model: newMetadata.Model,
+      //   orientation: newMetadata.Orientation,
+      //   saturation: newMetadata.Saturation,
+      //   sharpness: newMetadata.Sharpness,
+      //   whiteBalance: newMetadata.WhiteBalance,
+      // });
+      setFileMetadata(newMetadata);
     } catch (error) {
       console.error("Upload failed:", error);
     }

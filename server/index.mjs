@@ -37,9 +37,6 @@ app.use(
   })
 );
 
-// Initialize ExifTool
-const exiftool = new ExifTool();
-
 // Test route
 app.get("/test", (req, res) => {
   res.json({ message: "Express server is running!" });
@@ -47,6 +44,9 @@ app.get("/test", (req, res) => {
 
 // Handle file uploads and EXIF extraction
 app.post("/api/exif", upload.single("file"), async (req, res) => {
+  // Initialize ExifTool
+  const exiftool = new ExifTool();
+
   if (!req.file) {
     return res.status(400).json({ error: "No file uploaded" });
   }
@@ -54,11 +54,18 @@ app.post("/api/exif", upload.single("file"), async (req, res) => {
   try {
     console.log("Reading EXIF data from:", req.file.path);
     const metadata = await exiftool.read(req.file.path);
-    console.log(metadata);
     res.json(metadata);
   } catch (error) {
     console.error("Error reading EXIF:", error);
     res.status(500).json({ error: "Failed to read EXIF data" });
+  } finally {
+    await exiftool.end();
+    // Delete the uploaded file after reading EXIF data
+    fs.unlink(req.file.path, (err) => {
+      if (err) {
+        console.error("Error deleting file:", err);
+      }
+    });
   }
 });
 
