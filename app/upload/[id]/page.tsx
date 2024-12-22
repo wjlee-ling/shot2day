@@ -4,7 +4,6 @@ import { supabase } from "@/lib/supabase";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-// import exifr from "exifr";
 import { BookImage } from "lucide-react";
 import { v4 } from "uuid";
 
@@ -41,11 +40,6 @@ export default function UploadPage() {
     // formData.append("id", id);
 
     try {
-      // const newMetadata = await exifr.parse(file);
-      // const response = await fetch("/api/exiftool", {
-      //   method: "POST",
-      //   body: formData,
-      // });
       const response = await fetch("http://localhost:3001/api/exif", {
         method: "POST",
         body: formData,
@@ -56,26 +50,7 @@ export default function UploadPage() {
       }
 
       const newMetadata = await response.json();
-      console.log(newMetadata);
-      console.log(typeof newMetadata);
 
-      // setFileMetadata({
-      //   contrast: newMetadata.Contrast,
-      //   createDate: newMetadata.CreateDate,
-      //   exifImageWidth: newMetadata.ExifImageWidth,
-      //   exifImageHeight: newMetadata.ExifImageHeight,
-      //   exposureMode: newMetadata.ExposureMode,
-      //   exposureTime: newMetadata.ExposureTime,
-      //   fNumber: newMetadata.FNumber,
-      //   focalLength: newMetadata.FocalLength,
-      //   focalLengthIn35mmFormat: newMetadata.FocalLengthIn35mmFormat,
-      //   ISO: newMetadata.ISO,
-      //   Model: newMetadata.Model,
-      //   orientation: newMetadata.Orientation,
-      //   saturation: newMetadata.Saturation,
-      //   sharpness: newMetadata.Sharpness,
-      //   whiteBalance: newMetadata.WhiteBalance,
-      // });
       setFileMetadata(newMetadata);
     } catch (error) {
       console.error("Upload failed:", error);
@@ -187,7 +162,8 @@ export default function UploadPage() {
                     className={`flex flex-col gap-4 text-lg bg-black/50 text-white`}
                   >
                     {Object.entries(fileMetadata).map(([key, value]) =>
-                      value ? (
+                      value && typeof value !== "object" ? (
+                        // TODO: value가 object인 경우 처리
                         <div key={key} className="flex items-center px-4 py-2">
                           <div className="w-1/2 ">{key}</div>
                           <div>{formatValue(value)}</div>
