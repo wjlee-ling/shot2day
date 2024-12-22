@@ -2,20 +2,14 @@ import express from "express";
 import multer from "multer";
 import cors from "cors";
 import { ExifTool } from "exiftool-vendored";
-import path from "path";
 import { fileURLToPath } from "url";
-import { dirname } from "path";
 import fs from "fs";
-
-// ES modules fixes for __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3001;
 
 // Create uploads directory if it doesn't exist
-const uploadDir = path.join(__dirname, "uploads");
+const uploadDir = fileURLToPath(new URL("uploads", import.meta.url));
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir, { recursive: true });
 }
