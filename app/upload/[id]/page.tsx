@@ -40,7 +40,7 @@ export default function UploadPage() {
     // formData.append("id", id);
 
     try {
-      const response = await fetch("http://localhost:3001/api/exif", {
+      const response = await fetch("/api/exif", {
         method: "POST",
         body: formData,
       });
@@ -49,7 +49,7 @@ export default function UploadPage() {
         throw new Error("Failed to read metadata");
       }
 
-      const newMetadata = await response.json();
+      const { newMetadata } = await response.json();
 
       setFileMetadata(newMetadata);
     } catch (error) {
