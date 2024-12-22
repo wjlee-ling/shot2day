@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabase";
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import exifr from "exifr";
+// import exifr from "exifr";
 import { BookImage } from "lucide-react";
 import { v4 } from "uuid";
 
@@ -36,8 +36,28 @@ export default function UploadPage() {
     setImageFile(file); // Store the uploaded file
     setImageSrc(URL.createObjectURL(file));
 
+    const formData = new FormData();
+    formData.append("file", file);
+    // formData.append("id", id);
+
     try {
-      const newMetadata = await exifr.parse(file);
+      // const newMetadata = await exifr.parse(file);
+      // const response = await fetch("/api/exiftool", {
+      //   method: "POST",
+      //   body: formData,
+      // });
+      const response = await fetch("http://localhost:3001/api/exif", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to read metadata");
+      }
+
+      const { newMetadata } = await response.json();
+      console.log(newMetadata);
+
       setFileMetadata({
         contrast: newMetadata.Contrast,
         createDate: newMetadata.CreateDate,
