@@ -36,3 +36,7 @@ Shot2Day is an app for Ricoh 3-series photographers who want to **professionally
 
 - purpose: Let's focus on the basics! Instead of adding brand-new features like natural language querying and similarity search, implement advanced search and management. This will help define the target users, Ricoh GR3-series photographers, and add features that they desperately need.
 - change: ## summary and ## target
+
+### 2024-12-22
+
+- purpose: Use of Express.js for backend server to use exiftool-vendored for Ricoh-specific metadata
