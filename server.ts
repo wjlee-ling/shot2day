@@ -9,7 +9,8 @@ const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
-const upload = multer({ dest: "/tmp/uploads/" });
+// const upload = multer({ dest: "/tmp/uploads/" });
+const upload = multer({ storage: multer.memoryStorage() });
 
 app.prepare().then(() => {
   const server = express();
