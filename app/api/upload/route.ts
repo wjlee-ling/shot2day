@@ -37,6 +37,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ path });
   } catch (error: any) {
-    return NextResponse.json({ error: error.message }, { status: 512 });
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
