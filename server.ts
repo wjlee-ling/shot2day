@@ -17,23 +17,23 @@ app.prepare().then(() => {
 
   server.post("/api/exif", upload.single("file"), async (req, res) => {
     if (!req.file) {
-      return res.status(400).json({ error: "No file uploaded" });
-    }
-
-    try {
-      const tags = await exiftool.read(req.file.path);
-      res.json({ newMetadata: tags });
-    } catch (error) {
-      console.error("Error in exiftool processing:", error);
-      res.status(500).json({
-        error: `Failed to read metadata: ${error instanceof Error ? error.message : JSON.stringify(error)}`,
-      });
-    } finally {
-      await exiftool.end();
+      res.status(400).json({ error: "No file uploaded" });
+    } else {
       try {
-        await fs.unlink(req.file.path);
-      } catch (err) {
-        console.error("Error deleting file:", err);
+        const tags = await exiftool.read(req.file.path);
+        res.json({ newMetadata: tags });
+      } catch (error) {
+        console.error("Error in exiftool processing:", error);
+        res.status(500).json({
+          error: `Failed to read metadata: ${error instanceof Error ? error.message : JSON.stringify(error)}`,
+        });
+      } finally {
+        await exiftool.end();
+        try {
+          await fs.unlink(req.file.path);
+        } catch (err) {
+          console.error("Error deleting file:", err);
+        }
       }
     }
   });
