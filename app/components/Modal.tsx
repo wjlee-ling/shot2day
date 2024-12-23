@@ -1,5 +1,5 @@
 import { ImageItem } from "@/lib/types";
-import { displayLocalTime, formatMetadataValue } from "@/lib/helpers";
+import { displayLocalTime } from "@/lib/helpers";
 import { useEffect, useRef } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
