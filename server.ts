@@ -13,7 +13,6 @@ const handle = app.getRequestHandler();
 
 // const upload = multer({ dest: "/tmp/uploads/" });
 const upload = multer({ dest: path.join(os.tmpdir(), "uploads") });
-
 app.prepare().then(() => {
   const server = express();
   console.log("inside server.ts");
@@ -51,5 +50,3 @@ app.prepare().then(() => {
     console.log(`> Ready on http://localhost:${port}`);
   });
 });
-
-export default app;
