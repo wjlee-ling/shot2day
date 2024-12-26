@@ -5,7 +5,7 @@ export function displayLocalTime({
   utcDateTime: string;
   dateOnly?: boolean;
 }) {
-  var date = new Date(utcDateTime);
+  const date = new Date(utcDateTime);
   if (dateOnly) {
     return date.toLocaleDateString();
   }

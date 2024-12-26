@@ -4,13 +4,15 @@ import fs from "fs/promises";
 import { parse } from "url";
 import { exiftool } from "exiftool-vendored";
 import multer from "multer";
+import os from "os";
+import path from "path";
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
 
 // const upload = multer({ dest: "/tmp/uploads/" });
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ dest: path.join(os.tmpdir(), "uploads") });
 
 app.prepare().then(() => {
   const server = express();
