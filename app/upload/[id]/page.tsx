@@ -107,19 +107,20 @@ export default function UploadPage() {
     if (!imageFile || !text) return;
 
     try {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
+      // const response = await fetch("/api/upload", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({ id }),
+      // });
 
-      if (!response.ok) {
-        throw new Error("Failed to get/create bucket");
-      }
+      // if (!response.ok) {
+      //   throw new Error("Failed to get/create bucket");
+      // }
 
-      const { path } = await response.json();
+      // const { path } = await response.json();
+      const path = id;
       const url = supabase.storage.from(bucketName).getPublicUrl(path)
         .data.publicUrl;
       updateBucket({ path, file: imageFile });

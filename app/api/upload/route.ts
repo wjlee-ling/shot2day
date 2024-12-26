@@ -24,15 +24,6 @@ export async function POST(request: Request) {
     const bucketExists = buckets.some((bucket) => bucket.name === bucketName);
 
     if (!bucketExists) {
-      // Create the bucket if it doesn't exist -> Turns out to no avail because of RLS policy, which is supposed to be set up in Supabase Dashboard, not via Supabase SDK
-      // const { data, error: createError } = await supabase.storage.createBucket(
-      //   bucketName,
-      //   {
-      //     public: true,
-      //     allowedMimeTypes: ["image/*"],
-      //   },
-      // );
-      // if (createError) throw createError;
       throw new Error("Bucket not found");
     }
 
