@@ -47,9 +47,9 @@ export default function Home() {
     setImages(fetchedImages);
   };
 
-  // useEffect(() => {
-  //   fetchImages();
-  // }, []);
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const handleImageClick = (image: ImageItem) => {
     setSelectedImage(image);
