@@ -16,40 +16,49 @@ type Params = {
 // const bucketName = "shot2day-image";
 const tableName = "shots";
 
-async function getImages(params: Params) {
-  // const { data, error } = await supabase.storage
-  //   .from(bucketName)
-  //   .list("", params);
+// async function getImages(params: Params) {
+//   // const { data, error } = await supabase.storage
+//   //   .from(bucketName)
+//   //   .list("", params);
 
-  const { data, error } = await supabase.from(tableName).select("*");
+//   const { data, error } = await supabase.from(tableName).select("*");
+//   if (error) throw error;
 
-  if (error) throw error;
-  const images = data.map((record) => ({
-    id: record.id,
-    imageUrl: record.image_url,
-    text: record.text,
-    createdAt: record.created_at,
-    metadata: record.file_metadata,
-  }));
-  return images;
-}
+//   if (!data) {
+//     console.error("No data returned from Supabase");
+//     return []; // 빈 배열 반환
+//   }
+
+//   const images = data.map((record) => ({
+//     id: record.id,
+//     imageUrl: record.image_url,
+//     text: record.text,
+//     createdAt: record.created_at,
+//     metadata: record.file_metadata,
+//   }));
+//   return images;
+// }
 
 export default function Home() {
   const [images, setImages] = useState<ImageItem[]>([]);
   // const [loading, setLoading] = useState(true);
   const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
 
-  const fetchImages = async () => {
-    const fetchedImages = await getImages({
-      limit: 9,
-      offset: 0,
-    });
-    setImages(fetchedImages);
-  };
+  // const fetchImages = async () => {
+  //   try {
+  //     const fetchedImages = await getImages({
+  //       limit: 9,
+  //       offset: 0,
+  //     });
+  //     setImages(fetchedImages);
+  //   } catch (error) {
+  //     console.error("Error fetching images:", error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchImages();
-  }, []);
+  // useEffect(() => {
+  //   fetchImages();
+  // }, []);
 
   const handleImageClick = (image: ImageItem) => {
     setSelectedImage(image);
@@ -63,7 +72,7 @@ export default function Home() {
     <>
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        {images.length === 0 ? (
+        {!images || images.length === 0 ? (
           <p className="text-center mt-8">Loading images...</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
