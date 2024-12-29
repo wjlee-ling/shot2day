@@ -28,6 +28,7 @@ Shot2Day is an app for Ricoh 3-series photographers who want to **professionally
   - [ ] Search & display the basic GR filter settings
 - [ ] Toggle between applying a watermark to the image or not
 - [x] Given user input text and extracted metadata, upload/upsert them to a Supabase table (_12/19/2024_)
+- [ ] Add a scroll to the modal window in sm devices
 - [ ] ~~PGVector for similarity search~~ (_12/19/2024_)
 
 ## Change Log
