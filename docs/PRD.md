@@ -20,7 +20,7 @@ Shot2Day is an app for Ricoh 3-series photographers who want to **professionally
 - Programmers who want to add or augment the functionality of Shot2Day
 
 ## Featrues
-
+- [x] Deploy to GCP cloud (_12/29/2024_)
 - [x] Automatically extract & add metadata to uploaded images (_12/12/2024_)
 - [x] Automatically upload local images to Supabase (_12/16/2024_)
 - [x] Retrieve images from a Supabase storage (_12/17/2024_)
