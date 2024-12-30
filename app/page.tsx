@@ -62,7 +62,10 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
             {images.map((image) => (
-              <Link href={`/shots/${[image.id]}`} key={image.id}>
+              <Link href={{
+                pathname: `/shots/${image.id}`,
+                query: { image: JSON.stringify(image) }
+              }} key={image.id}>
                 <ImageBox
                   image={image}
                   onClick={handleImageClick}
