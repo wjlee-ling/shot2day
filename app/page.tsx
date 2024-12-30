@@ -2,10 +2,11 @@
 
 import { useState, useEffect } from "react";
 import { ImageBox } from "@/app/components/ImageBox";
-import { Modal } from "@/app/components/Modal";
 import { Navbar } from "@/app/components/Navbar";
 import { ImageItem } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
+import Link from 'next/link';
 
 type Params = {
   limit: number;
@@ -13,14 +14,9 @@ type Params = {
   search?: string; // The search string to filter files by.
   sortBy?: object; // The column to sort by. Can be any column inside a FileObject.
 };
-// const bucketName = "shot2day-image";
 const tableName = "shots";
 
 async function getImages(params: Params) {
-  // const { data, error } = await supabase.storage
-  //   .from(bucketName)
-  //   .list("", params);
-
   const { data, error } = await supabase.from(tableName).select("*");
 
   if (error) throw error;
@@ -35,9 +31,9 @@ async function getImages(params: Params) {
 }
 
 export default function Home() {
+  const router = useRouter();
   const [images, setImages] = useState<ImageItem[]>([]);
-  // const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
+  // const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
 
   const fetchImages = async () => {
     const fetchedImages = await getImages({
@@ -52,11 +48,9 @@ export default function Home() {
   }, []);
 
   const handleImageClick = (image: ImageItem) => {
-    setSelectedImage(image);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedImage(null);
+    // setSelectedImage(image);
+    // router.push(`/shots/${image.id}`);
+    console.log('item')
   };
 
   return (
@@ -68,15 +62,15 @@ export default function Home() {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-8">
             {images.map((image) => (
-              <ImageBox
-                key={image.id}
-                image={image}
-                onClick={handleImageClick}
-              />
+              <Link href={`/shots/${[image.id]}`} key={image.id}>
+                <ImageBox
+                  image={image}
+                  onClick={handleImageClick}
+                />
+              </Link>
             ))}
           </div>
         )}
-        <Modal image={selectedImage} onClose={handleCloseModal} />
       </main>
     </>
   );
