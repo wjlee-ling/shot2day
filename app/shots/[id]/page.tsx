@@ -1,5 +1,5 @@
 'use client';
-
+import {Navbar} from '@/app/components/Navbar';
 import { useSearchParams } from 'next/navigation'
 
 export default function Shot() {
@@ -8,12 +8,15 @@ export default function Shot() {
 
   return (
     <div>
+    <Navbar/>
+    <div>
       {image && (
         <div>
           <h1>{image.id}</h1>
           <img src={image.imageUrl} alt={image.text} />
         </div>
       )}
+    </div>
     </div>
   )
 }
