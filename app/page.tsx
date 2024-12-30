@@ -5,7 +5,6 @@ import { ImageBox } from "@/app/components/ImageBox";
 import { Navbar } from "@/app/components/Navbar";
 import { ImageItem } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
-import { useRouter } from "next/navigation";
 import Link from 'next/link';
 
 type Params = {
@@ -31,7 +30,6 @@ async function getImages(params: Params) {
 }
 
 export default function Home() {
-  const router = useRouter();
   const [images, setImages] = useState<ImageItem[]>([]);
   // const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
 
