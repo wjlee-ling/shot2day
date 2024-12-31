@@ -15,7 +15,7 @@ export default function Shot() {
             <div className="border-2 border-black w-1/4">
               <Sidebar imageItem={image} />
             </div>
-            <div className="relative flex-1"> {/* `relative` required for the `fill` attr. in the child Image tag */}
+            <div className="relative flex-1"> {/* `relative`, `absolute` or `fixed` required for the `fill` attr. in the child Image tag */}
               <Image src={image.imageUrl} alt={image.text} fill style={{ objectFit: 'contain' }} sizes="100vw"/>
             </div>
         </main>
