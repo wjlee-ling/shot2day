@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { ImageBox } from "@/app/components/ImageBox";
-import { Navbar } from "@/app/components/Navbar";
 import { ImageItem } from "@/lib/types";
 import { supabase } from "@/lib/supabase";
 import Link from 'next/link';
@@ -48,12 +47,10 @@ export default function Home() {
   const handleImageClick = (image: ImageItem) => {
     // setSelectedImage(image);
     // router.push(`/shots/${image.id}`);
-    console.log('item')
   };
 
   return (
     <>
-      <Navbar />
       <main className="container mx-auto px-4 py-8">
         {images.length === 0 ? (
           <p className="text-center mt-8">Loading images...</p>
