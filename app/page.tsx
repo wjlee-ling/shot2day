@@ -55,7 +55,7 @@ export default function Home() {
         {images.length === 0 ? (
           <p className="text-center mt-8">Loading images...</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1">
             {images.map((image) => (
               <Link href={{
                 pathname: `/shots/${image.id}`,

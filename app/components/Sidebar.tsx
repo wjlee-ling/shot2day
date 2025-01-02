@@ -5,7 +5,7 @@ const Sidebar = ({ imageItem }: {imageItem:ImageItem}) => {
   const { text, createdAt, metadata } = imageItem;
   const metadataList = Object.entries(metadata).map(([key, value]) => {
     return value ? (
-      <div key={key} className="flex flex-row flex-1 border-gray-600 rounded-lg content-center text-lg">
+      <div key={key} className="flex flex-row flex-1 content-center text-lg">
         <div className="bg-black text-white font-bold p-1">{key}</div>
         <div className="p-1">
           {key === "createDate"
