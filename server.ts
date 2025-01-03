@@ -30,7 +30,7 @@ app.prepare().then(() => {
           error: `Failed to read metadata: ${error instanceof Error ? error.message : JSON.stringify(error)}`,
         });
       } finally {
-        await exiftool.end();
+        // No need to call exiftool.end() here
         try {
           await fs.unlink(req.file.path);
         } catch (err) {
@@ -46,7 +46,18 @@ app.prepare().then(() => {
   });
 
   const port = process.env.PORT || 3000;
-  server.listen(port, () => {
+  const serverInstance = server.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
   });
+
+  const gracefulShutdown = async() => {
+    await exiftool.end();
+    serverInstance.close(() => {
+      console.log("Server closing");
+      process.exit(0);
+    })
+  }
+
+  process.on("SIGTERM", gracefulShutdown)
+  process.on("SIGINT", gracefulShutdown)
 });
