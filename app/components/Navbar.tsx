@@ -15,7 +15,7 @@ export function Navbar() {
 
   return (
     <nav className="bg-gray-800 text-white border-b">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
+      <div className="container mx-auto px-4 h-[var(--navbar-height)] flex items-center justify-between">
         <Link href="/" className="text-xl font-bold">
           Shot2Day
         </Link>

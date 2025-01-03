@@ -152,7 +152,7 @@ export default function UploadPage() {
               <Image
                 src={imageSrc}
                 alt="Uploaded Image"
-                layout="responsive"
+                style={{ width: "100%", height: "auto" }}
                 width={16}
                 height={9}
                 className="object-contain rounded-lg object-top"

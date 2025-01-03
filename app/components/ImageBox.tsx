@@ -11,7 +11,7 @@ interface ImageBoxProps {
 export function ImageBox({ image, onClick }: ImageBoxProps) {
   return (
     <div
-      className="cursor-pointer border-2 border-gray-300 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 bg-white p-2"
+      className="cursor-pointer rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 bg-white p-2"
       onClick={() => onClick(image)}
     >
       <Image
