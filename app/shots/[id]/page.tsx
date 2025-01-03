@@ -27,7 +27,8 @@ export default function Shot() {
     setImage({
       id: data.id,
       text: data.text,
-      imageUrl: data.image_url,
+      // imageUrl: data.image_url,
+      imageUrl:`/api/image?id=${data.id}`,
       createdAt: data.created_at,
       metadata: data.file_metadata,
     });
