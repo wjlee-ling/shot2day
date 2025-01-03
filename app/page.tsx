@@ -10,7 +10,7 @@ type Params = {
 const tableName = "shots";
 
 async function getImages(params: Params) {
-  const { data, error } = await supabase.from(tableName).select("*");
+  const { data, error } = await supabase.from(tableName).select("*"); //TODO: limit given params
 
   if (error) throw error;
   const images = data.map((record) => ({
@@ -24,12 +24,10 @@ async function getImages(params: Params) {
 }
 
 export default async function Home() {
-
   const fetchedImages = await getImages({
     limit: 5,
     offset: 0,
   });
-
 
   return (
     <>
