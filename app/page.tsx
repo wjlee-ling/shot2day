@@ -1,11 +1,5 @@
-"use client";
-
-import { ImageBox } from "@/app/components/ImageBox";
-import { ImageItem } from "@/lib/types";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import ClientGallery from "@/app/components/ClientGallery";
 import { supabase } from "@/lib/supabase";
-// import Link from 'next/link';
 
 type Params = {
   limit: number;
@@ -29,49 +23,18 @@ async function getImages(params: Params) {
   return images;
 }
 
-export default function Home() {
-  const router = useRouter();
-  const [images, setImages] = useState<ImageItem[]>([]);
-  const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
+export default async function Home() {
 
-  const fetchImages = async () => {
-    const fetchedImages = await getImages({
-      limit: 9,
-      offset: 0,
-    });
-    setImages(fetchedImages);
-  };
+  const fetchedImages = await getImages({
+    limit: 5,
+    offset: 0,
+  });
 
-  useEffect(() => {
-    fetchImages();
-  }, []);
-
-  const handleImageClick = (image: ImageItem) => {
-    setSelectedImage(image);
-    router.push(`/shots/${image.id}`);
-  };
 
   return (
     <>
       <main className="container mx-auto px-4 py-8">
-        {images.length === 0 ? (
-          <p className="text-center mt-8">Loading images...</p>
-        ) : (
-          <div className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 gap-1">
-            {images.map((image) => (
-              // <Link href={{
-              //   pathname: `/shots/${image.id}`,
-              //   query: { image: JSON.stringify(image) }
-              // }} key={image.id}>
-                <ImageBox
-                  key={image.id}
-                  image={image}
-                  onClick={handleImageClick}
-                />
-              // </Link>
-            ))}
-          </div>
-        )}
+        <ClientGallery initialImages={fetchedImages} />
       </main>
     </>
   );
