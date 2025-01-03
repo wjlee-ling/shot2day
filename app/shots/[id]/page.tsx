@@ -12,6 +12,7 @@ export default function Shot() {
   const img_id = pathname.split("/").pop();
   const [image, setImage] = useState<ImageItem>();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -27,8 +28,7 @@ export default function Shot() {
     setImage({
       id: data.id,
       text: data.text,
-      // imageUrl: data.image_url,
-      imageUrl:`/api/image?id=${data.id}`,
+      imageUrl: `/api/image?id=${data.id}`,
       createdAt: data.created_at,
       metadata: data.file_metadata,
     });
@@ -50,38 +50,42 @@ export default function Shot() {
               alt={image.text}
               fill
               className="object-contain"
+              onLoadingComplete={() => setImageLoaded(true)}
+              priority
             />
           </div>
 
-          <div
-            className={`
-              flex flex-col
-              lg:max-w-[calc(100vw*2/3)]
-              ${isSidebarOpen ? "h-[calc(100vh*2/3)] border-2 border-black rounded-lg" : "h-12"}
-              mx-3
-              overflow-auto
-            `}
-          >
-            <div className="flex justify-end p-2">
-              <button
-                onClick={toggleSidebar}
-                className="bg-zinc-800 text-white p-2 rounded-full"
-                aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
-              >
-                {isSidebarOpen ? <Minus size={24} /> : <Plus size={24} />}
-              </button>
-            </div>
+          {imageLoaded && (
             <div
               className={`
-                overflow-x-scroll
-                overflow-y-scroll
-                ${isSidebarOpen ? "max-h-full max-w-full" : "max-h-0 lg:max-h-full hidden"}
-                transition-all duration-300 ease-in-out
+                flex flex-col
+                lg:max-w-[calc(100vw*2/3)]
+                ${isSidebarOpen ? "h-[calc(100vh*2/3)] border-2 border-black rounded-lg" : "h-12"}
+                mx-3
+                overflow-auto
               `}
             >
-              <Sidebar imageItem={image} />
+              <div className="flex justify-end p-2">
+                <button
+                  onClick={toggleSidebar}
+                  className="bg-zinc-800 text-white p-2 rounded-full"
+                  aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+                >
+                  {isSidebarOpen ? <Minus size={24} /> : <Plus size={24} />}
+                </button>
+              </div>
+              <div
+                className={`
+                  overflow-x-scroll
+                  overflow-y-scroll
+                  ${isSidebarOpen ? "max-h-full max-w-full" : "max-h-0 lg:max-h-full hidden"}
+                  transition-all duration-300 ease-in-out
+                `}
+              >
+                <Sidebar imageItem={image} />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ) : (
         <p>Loading...</p>
