@@ -31,7 +31,6 @@ export default function Shot() {
       createdAt: data.created_at,
       metadata: data.file_metadata,
     });
-    console.log(data);
   };
 
   useEffect(() => {
@@ -44,7 +43,7 @@ export default function Shot() {
         <div
           className={`flex flex-col justify-evenly align-middle lg:flex-row h-[calc(98vh-var(--navbar-height))] gap-4 relative`}
         >
-          <div className="relative flex-1 min-h-[calc(100vh*2/3)]">
+          <div className="relative flex-1 min-h-[calc(100vh*2/3)] min-w-[calc(100vw*2/3)]">
             <Image
               src={image.imageUrl}
               alt={image.text}
@@ -55,12 +54,12 @@ export default function Shot() {
 
           <div
             className={`
-        flex flex-col
-        lg:max-w-[calc(100vw*2/3)]
-        ${isSidebarOpen ? "h-[calc(100vh*2/3)] border-2 border-black rounded-lg" : "h-12"}
-        mx-3
-        overflow-auto
-      `}
+              flex flex-col
+              lg:max-w-[calc(100vw*2/3)]
+              ${isSidebarOpen ? "h-[calc(100vh*2/3)] border-2 border-black rounded-lg" : "h-12"}
+              mx-3
+              overflow-auto
+            `}
           >
             <div className="flex justify-end p-2">
               <button
@@ -73,10 +72,11 @@ export default function Shot() {
             </div>
             <div
               className={`
-          overflow-y-scroll
-          ${isSidebarOpen ? "max-h-full" : "max-h-0 lg:max-h-full hidden"}
-          transition-all duration-300 ease-in-out
-        `}
+                overflow-x-scroll
+                overflow-y-scroll
+                ${isSidebarOpen ? "max-h-full max-w-full" : "max-h-0 lg:max-h-full hidden"}
+                transition-all duration-300 ease-in-out
+              `}
             >
               <Sidebar imageItem={image} />
             </div>
