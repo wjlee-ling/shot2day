@@ -14,7 +14,7 @@ export default function Shot() {
   // const [imageOrientation, setImageOrientation] = useState<
   //   "landscape" | "portrait"
   // >("landscape");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   // useEffect(() => {
   //   const img = new window.Image();
@@ -51,13 +51,13 @@ export default function Shot() {
       `}
       >
         <div className="flex justify-end p-2">
-        <button
-          onClick={toggleSidebar}
-          className="justify-end bg-zinc-800 text-white p-2 rounded-full"
-          aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
-        >
-          {isSidebarOpen ? <Minus size={24} /> : <Plus size={24} />}
-        </button>
+          <button
+            onClick={toggleSidebar}
+            className="bg-zinc-800 text-white p-2 rounded-full"
+            aria-label={isSidebarOpen ? "Close sidebar" : "Open sidebar"}
+          >
+            {isSidebarOpen ? <Minus size={24} /> : <Plus size={24} />}
+          </button>
         </div>
         <div
           className={`
